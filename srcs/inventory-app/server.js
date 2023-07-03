@@ -1,9 +1,12 @@
 import express from 'express';
-const app = express();
-const port = 8080;
 import bodyParser from 'body-parser';
 import { db } from './app/models/index.js';
 import movieApi from './app/routes/movies.js';
+import dotenv from 'dotenv';
+dotenv.config();
+const app = express();
+const port = process.env.MOVIES_API_PORT || 8080;
+
 app.use(bodyParser.json());
 
 movieApi(app, db);
