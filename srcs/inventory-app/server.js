@@ -10,6 +10,6 @@ movieApi(app, db);
 
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
-        console.log(`Example app listening on port ${port}`);
+        console.log(`Inventory app listening on port ${port}`);
     });
 });
