@@ -1,0 +1,13 @@
+import { Sequelize, DataTypes } from 'sequelize';
+import database from '../config/config.js';
+import models from './movies.js';
+
+const db = {};
+const sequelize = new Sequelize(database.development);
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+db.movies = models(sequelize, DataTypes);
+
+export { db };
