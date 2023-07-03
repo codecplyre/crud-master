@@ -2,25 +2,10 @@ export default (db) => {
     return {
         getMovies(req, res) {
             console.log('/api/movies');
+            const where = req.query.title ? { title: req.query.title } : {};
             db.movies
                 .findAll({
-                    attributes: ['id', 'title', 'description'],
-                })
-                .then((movies) => {
-                    res.json(movies);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    res.json(err.errors);
-                });
-        },
-        getMoviesByTitle(req, res) {
-            console.log('/api/movies?title=[name]');
-            db.movies
-                .findAll({
-                    where: {
-                        title: req.query.title,
-                    },
+                    where,
                     attributes: ['id', 'title', 'description'],
                 })
                 .then((movies) => {
