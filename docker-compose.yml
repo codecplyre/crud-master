@@ -22,3 +22,14 @@ services:
       - ${POSTGRES_PORT_BILLING_DB}:5432
     # volumes:
     #   - ./database/billing-db/data:/var/lib/postgresql/data
+  order-queue:
+    image: rabbitmq:3-management
+    container_name: order-queue
+    ports:
+      - ${RABBITMQ_PORT}:5672
+      - ${RABBITMQ_MANAGEMENT_PORT}:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+
+
