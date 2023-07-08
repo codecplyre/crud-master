@@ -5,18 +5,19 @@
     "main": "server.js",
     "type": "module",
     "scripts": {
-        "start": "nodemon server.js",
+        "start": "node server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "amqplib": "^0.10.3",
+        "buffer": "^6.0.3",
         "dotenv": "^16.3.1",
         "express": "^4.18.2"
     },
     "devDependencies": {
-        "http-proxy-middleware": "^2.0.6",
-        "nodemon": "^2.0.22"
+        "http-proxy-middleware": "^2.0.6"
     }
 }
