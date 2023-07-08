@@ -9,9 +9,8 @@ dotenv.config();
 const app = express();
 const port = process.env.API_GATEWAY_PORT || 3000;
 
+app.use('/api/movies', proxyMiddleware(process.env.MOVIES_API_URL));
 app.use(bodyParser.json());
-app.use('/api', proxyMiddleware(process.env.MOVIES_API_URL));
-
 routes(app);
 connectQueue(process.env.RABBITMQ_URL);
 app.listen(port, () => {
