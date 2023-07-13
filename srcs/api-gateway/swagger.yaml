@@ -1,0 +1,228 @@
+openapi: 3.0.0
+info:
+  title: API Gateway
+  description: API Gateway
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local server
+tags:
+  - name: Billing
+    description: Billing service
+  - name: Inventory
+    description: Inventory service
+paths:
+  /api/billing:
+    get:
+      summary: Get billing
+      description: Retrieve a list of all billing
+      tags:
+        - Billing
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Billing'
+    post:
+      summary: Create billing
+      description: Create billing
+      tags:
+        - Billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBilling'
+      responses:
+        '200':
+          description: OK
+          content:
+            text plain:
+              schema:
+                type: string
+                example: 'Message Sent'
+  /api/movies:
+    get:
+      summary: Retrieve all movies
+      description: Retrieves a list of all movies in the database.
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Retrieves a list of all movies in the database with the given title.
+      tags:
+        - Inventory
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+    post:
+      summary: Create a new movie
+      description: Creates a new movie entry in the database.
+      tags:
+        - Inventory
+      requestBody:
+        description: Movie to add to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMovie'
+      responses:
+        '201':
+          description: Movie created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+    delete:
+      summary: Delete all movies
+      description: Deletes all movies from the database.
+      tags:
+        - Inventory
+      responses:
+        '204':
+          description: Count of deleted rows
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"affected" : 1}
+  /api/movies/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: ID of the movie
+        schema:
+          type: string
+          format: uuid
+          description: billing unique identifier
+          example: a62a1b76-2a01-4263-b3f1-8989dfbeec29
+          pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+    get:
+      summary: Retrieve a single movie
+      description: Retrieves a single movie by its ID.
+      tags:
+        - Inventory
+      responses:
+        '200':
+          description: Successful operation
+    put:
+      summary: Update a single movie
+      description: Updates a single movie by its ID.
+      tags:
+        - Inventory
+      requestBody:
+        description: Movie object to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMovie'
+      responses:
+        '200':
+          description: Count of affected rows
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"affected" : [1]}
+    delete:
+      summary: Delete a single movie
+      description: Deletes a single movie by its ID.
+      tags:
+        - Inventory
+      responses:
+        '204':
+          description: Count of deleted row (0 or 1)
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"affected" : 1}
+  schemas:
+    Billing:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: billing unique identifier
+          example: a62a1b76-2a01-4263-b3f1-8989dfbeec29
+          pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+        user_id:
+          type: string
+        number_of_items:
+          type: number
+          description: number of items
+          example: 1
+        total_amount:
+          type: number
+          description: total amount
+          example: 100
+        createdAt:
+          type: string
+          format: date-time
+          description: date of creation (time with timezone)
+        updatedAt:
+          type: string
+          format: date-time
+          description: date of last update (time with timezone)
+    PostBilling:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: user id
+          example: "1"
+        number_of_items:
+          type: number
+          description: number of items
+          example: 1
+        total_amount:
+          type: number
+          description: total amount
+          example: 100
+    Movie:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: movie unique identifier
+          example: a62a1b76-2a01-4263-b3f1-8989dfbeec29
+          pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+        title:
+          type: string
+          description: movie title
+          example: The Matrix
+        description:
+          type: string
+          description: movie description
+          example: A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.
+        createdAt:
+          type: string
+          format: date-time
+          description: date of creation (time with timezone)
+        updatedAt:
+          type: string
+          format: date-time
+          description: date of last update (time with timezone)
+    PostMovie:
+      type: object
+      properties:
+        title:
+          type: string
+          description: movie title
+          example: The Matrix
+        description:
+          type: string
+          description: movie description
+          example: A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.
