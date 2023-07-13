@@ -19,7 +19,7 @@ export default (sequelize, DataTypes) => {
                 notEmpty: true,
             },
         },
-        toal_amount: {
+        total_amount: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {

@@ -1,10 +1,14 @@
 import amqp from 'amqplib';
 import { Buffer } from 'buffer';
-let channel, connection;
+
 async function connectQueue(queueServerUrl, db) {
     try {
-        connection = await amqp.connect(queueServerUrl);
-        channel = await connection.createChannel();
+        const connection = await amqp.connect(queueServerUrl);
+        const channel = await connection.createChannel();
+        process.once('SIGINT', async () => {
+            await channel.close();
+            await connection.close();
+        });
         await channel.assertQueue('billing_queue');
         channel.consume('billing_queue', (data) => {
             const content = Buffer.from(data.content);
@@ -14,13 +18,13 @@ async function connectQueue(queueServerUrl, db) {
                 .create({
                     user_id,
                     number_of_items: Number(number_of_items),
-                    toal_amount: Number(total_amount),
+                    total_amount: Number(total_amount),
                 })
                 .then(() => {
                     channel.ack(data);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    throw err;
                 });
         });
     } catch (error) {
