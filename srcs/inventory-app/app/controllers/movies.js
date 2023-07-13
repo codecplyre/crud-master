@@ -6,7 +6,6 @@ export default (db) => {
             db.movies
                 .findAll({
                     where,
-                    attributes: ['id', 'title', 'description'],
                 })
                 .then((movies) => {
                     res.json(movies);
@@ -39,7 +38,7 @@ export default (db) => {
                     where: {},
                 })
                 .then((result) => {
-                    res.json(result);
+                    res.json({ affected: result });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -49,9 +48,7 @@ export default (db) => {
         getMovieById(req, res) {
             console.log('/api/movies/:id');
             db.movies
-                .findByPk(req.params.id, {
-                    attributes: ['title', 'description'],
-                })
+                .findByPk(req.params.id)
                 .then((movie) => {
                     res.json(movie);
                 })
@@ -75,7 +72,7 @@ export default (db) => {
                     }
                 )
                 .then((result) => {
-                    res.json(result);
+                    res.json({ affected: result });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -91,7 +88,7 @@ export default (db) => {
                     },
                 })
                 .then((result) => {
-                    res.json(result);
+                    res.json({ affected: result });
                 })
                 .catch((err) => {
                     console.log(err);
