@@ -147,6 +147,7 @@ paths:
               schema:
                 type: object
                 example: {"affected" : 1}
+components:
   schemas:
     Billing:
       type: object
