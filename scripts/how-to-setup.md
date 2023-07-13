@@ -1,4 +1,4 @@
-# How to set up the environment
+# How to set up the environment with Vagrant and VirtualBox
 
 all the command in this document need to be run in the root directory. To set up the environment, follow the steps bellow:
 
@@ -6,6 +6,8 @@ Step 1: Clone the project
 Step 2: Add environment variable to each application. The enviroment variable below is the example of the environment variable that is used in the project. You can change the value of the environment variable based on your need.
 
 **.env** file for api-gateway application:
+
+./srcs/api-gateway/.env
 
 ```env
 MOVIES_API_URL="http://192.168.33.11:8080"
@@ -15,6 +17,8 @@ RABBITMQ_URL="amqp://192.168.33.12:5672"
 ```
 
 **.env** file for billing-app application:
+
+./srcs/billing-app/.env
 
 ```env
 BILLING_API_PORT=8081
@@ -32,6 +36,8 @@ RABBITMQ_PASSWORD='guest'
 ```
 
 **.env** file for inventory-app application:
+
+./srcs/inventory-app/.env
 
 ```env
 MOVIES_API_PORT=8080
