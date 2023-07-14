@@ -10,10 +10,14 @@ Step 2: Add environment variable to each application. The enviroment variable be
 ./srcs/api-gateway/.env
 
 ```env
-MOVIES_API_URL="http://192.168.33.11:8080"
-BILLING_API_URL="http://192.168.33.12:8081"
+API_GATEWAY_IP="192.168.33.10"
 API_GATEWAY_PORT=3000
-RABBITMQ_URL="amqp://192.168.33.12:5672"
+MOVIES_API_URL="192.168.33.11"
+MOVIES_API_PORT= 8080
+BILLING_API_IP="192.168.33.12"
+BILLING_API_PORT=8081
+RABBITMQ_IP="192.168.33.12"
+RABBITMQ_PORT=5672
 ```
 
 **.env** file for billing-app application:
@@ -90,7 +94,7 @@ Step 7: Delete the Virtual Machine (Optional)
 
 ## Delete the Virtual Machine
 
-The command bellow will delete the all the Vm that is created using [**setup-vm.sh**](./setup-virtual-machine.sh). You can check the script in the [*delete-virtual-machine.sh*](./delete-virtual-machine.sh). You can run this script if you want to delete the virtual machine. I find it useful when I want to start the project from the beginning. You can also delete the virtual machine manually.
+The command bellow will delete the all the Vm that is created using [**setup-vm.sh**](./setup-virtual-machine.sh). You can check the script in the [_delete-virtual-machine.sh_](./delete-virtual-machine.sh). You can run this script if you want to delete the virtual machine. I find it useful when I want to start the project from the beginning. You can also delete the virtual machine manually.
 
 ```cmd
     ./scripts/delete-vm.sh

@@ -12,12 +12,19 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 dotenv.config();
 const app = express();
 const port = process.env.API_GATEWAY_PORT || 3000;
+const moviesApiIp = process.env.MOVIES_API_IP || 'localhost';
+const moviesApiPort = process.env.MOVIES_API_PORT || 8080;
+const rabbitmqIp = process.env.RABBITMQ_IP || 'localhost';
+const rabbitmqPort = process.env.RABBITMQ_PORT || 5672;
 
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/movies', proxyMiddleware(process.env.MOVIES_API_URL));
+app.use(
+    '/api/movies',
+    proxyMiddleware(`http://${moviesApiIp}:${moviesApiPort}`)
+);
 app.use(bodyParser.json());
 app.use('/api/billing', billingRoutes);
-connectQueue(process.env.RABBITMQ_URL);
+connectQueue(`amqp://${rabbitmqIp}:${rabbitmqPort}`);
 app.listen(port, () => {
     console.log(`API Gateway is listening on port ${port}`);
 });
