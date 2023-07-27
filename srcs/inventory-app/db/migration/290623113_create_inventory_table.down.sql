@@ -1,0 +1,2 @@
+-- Active: 1690441941727@@127.0.0.1@5432@movies
+DROP TABLE IF EXISTS "movies";
